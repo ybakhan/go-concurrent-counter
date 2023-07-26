@@ -17,7 +17,11 @@ in order to execute this script with the appropriate permissions.
 You may use any means necessary to achieve an accurate counter increment, but the main() function must be left untouched. Using a new library (e.g. gin or gorilla mux) to rewrite the http server and endpoint handling is also not allowed.  The ab tool configured to make parallel requests must be the only thing used to make the increment requests to the HTTP server. Create a branch for your solution and have at it! 
 
 ## Bonus Points
-Add a decrement endpoint to the HTTP server, and work out how to manage requests that are potentially incrementing and decrementing the counter at the same time.
+Add a decrement endpoint to the HTTP server, and work out how to manage requests that are potentially incrementing and decrementing the counter at the same time.  Going for bonus points will allow you to add 
+
+```http.HandleFunc("/decrement", dec)```
+
+to the main() function, but all other rules still apply.
 
 ### *~ Omnia concors.*
 
