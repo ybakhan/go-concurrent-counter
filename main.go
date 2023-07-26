@@ -11,17 +11,17 @@ import (
 var counter int = 0
 
 func get(w http.ResponseWriter, req *http.Request) {
-	log.Printf("get received: %v", counter)
+	log.Printf("GET received: %v", counter)
 	fmt.Fprintf(w, "got: %d\n", counter)
 }
 
 func set(w http.ResponseWriter, req *http.Request) {
-	log.Printf("set %v", req)
+	log.Printf("SET counter to: %v", req)
 	val := req.URL.Query().Get("val")
 	intval, err := strconv.Atoi(val)
 
 	if err != nil {
-		panic("unhandled error")
+		panic("unhandled error in API SET handler")
 	}
 
 	counter = intval
@@ -39,10 +39,10 @@ func main() {
 	http.HandleFunc("/set", set)
 	http.HandleFunc("/increment", inc)
 
-	portnum := 8000
+	portnum := 9095
 	if len(os.Args) > 1 {
 		portnum, _ = strconv.Atoi(os.Args[1])
 	}
-	log.Printf("Going to listen on port %d\n", portnum)
+	log.Printf("Listening on port %d\n", portnum)
 	log.Fatal(http.ListenAndServe("localhost:"+strconv.Itoa(portnum), nil))
 }
