@@ -23,10 +23,10 @@ Add a decrement endpoint to the HTTP server, and work out how to manage requests
 
 to the main() function, but all other rules still apply.
 
-##Explainer For The Concurrency Concept
+## Explainer For The Concurrency Concept
 Concurrency is not parallelism. Concurrency is how multiple independent processes are composed, parallelism is the simultaneous execution of instructions.  From a CPU perspective, concurrency is scheduled at the single core level, and potentially using to other cores as needed (orchestrating many things at the same time).  Parallel execution, on the other hand, is decidedly handled by multiple, independent CPU cores (doing many things at the exact same time).  A good analogy is the juggler - concurrency is having two arms/hands and working with multiple balls up in the air. Parallelism is the juggler having 4 sets of arms/hands and juggling independent sets of balls simultaneously.  The parallel juggler doesn't even have to juggle sets of balls, just tossing one ball per hand displays their simultaneous handling ability.
 
-### *~ Omnia concors.*
+### ~ Omnia concors.
 
 
 
