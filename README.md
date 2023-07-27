@@ -14,7 +14,7 @@ chmod 755 ./ab-benchmark.sh
 in order to execute this script with the appropriate permissions.
 
 ## Challenge Rules
-You may use any means necessary to achieve an accurate counter increment, but the main() function must be left untouched. Using a new library (e.g. gin or gorilla mux) to rewrite the http server and endpoint handling is also not allowed.  The ab tool configured to make parallel requests must be the only thing used to make the increment requests to the HTTP server. Fork this repository or clone it, create your own remote repo from it, and when your ready to submit your final solution, send me the URL.
+You may use any means necessary to achieve an accurate counter increment, but the main() function must be left untouched. Using a new library (e.g. gin or gorilla mux) to rewrite the http server and endpoint handling is also not allowed.  The ab tool configured to make parallel requests must be the only thing used to make the increment requests to the HTTP server. Fork this repository or clone it, create your own remote repo from it, and when you're ready to submit your final solution, send me the URL.
 
 ## Bonus Points
 Add a decrement endpoint to the HTTP server, and work out how to manage requests that are potentially incrementing and decrementing the counter at the same time.  Going for bonus points will allow you to add 
