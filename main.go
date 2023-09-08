@@ -6,16 +6,26 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"sync"
 )
 
-var counter int = 0
+var counter = Counter{}
+
+type Counter struct {
+	mu    sync.Mutex
+	value int
+}
 
 func get(writer http.ResponseWriter, req *http.Request) {
-	log.Printf("GET counter request: %v", counter)
-	fmt.Fprintf(writer, "Counter is at: %d\n", counter)
+	counter.mu.Lock()
+	defer counter.mu.Unlock()
+	log.Printf("GET counter request: %v", counter.value)
+	fmt.Fprintf(writer, "Counter is at: %d\n", counter.value)
 }
 
 func set(writer http.ResponseWriter, req *http.Request) {
+	counter.mu.Lock()
+	defer counter.mu.Unlock()
 	log.Printf("SET counter request: %v", req.RequestURI)
 	value := req.URL.Query().Get("value")
 	intval, err := strconv.Atoi(value)
@@ -24,20 +34,30 @@ func set(writer http.ResponseWriter, req *http.Request) {
 		log.Println("SET handler: non-integer parameter value.")
 	}
 
-	counter = intval
-	log.Printf("counter set to: %v", counter)
-	fmt.Fprintf(writer, "Counter set to: %d\n", counter)
+	counter.value = intval
+	log.Printf("counter set to: %v", counter.value)
+	fmt.Fprintf(writer, "Counter set to: %d\n", counter.value)
 }
 
 func inc(_ http.ResponseWriter, _ *http.Request) {
-	counter = counter + 1
-	log.Printf("counter incremented to: %v", counter)
+	counter.mu.Lock()
+	defer counter.mu.Unlock()
+	counter.value++
+	log.Printf("counter incremented to: %v", counter.value)
+}
+
+func dec(_ http.ResponseWriter, _ *http.Request) {
+	counter.mu.Lock()
+	defer counter.mu.Unlock()
+	counter.value--
+	log.Printf("counter decremented to: %v", counter.value)
 }
 
 func main() {
 	http.HandleFunc("/counter", get)
 	http.HandleFunc("/counter/set", set)
 	http.HandleFunc("/increment", inc)
+	http.HandleFunc("/decrement", dec)
 
 	port := 9095
 	if len(os.Args) > 1 {
